@@ -1,0 +1,21 @@
+CREATE TABLE submissions (
+    id BIGSERIAL PRIMARY KEY,
+    respondent_type VARCHAR(20) NOT NULL,
+    respondent_other VARCHAR(255),
+    patient_email VARCHAR(255) NOT NULL,
+    q1 INTEGER NOT NULL,
+    q2 INTEGER NOT NULL,
+    q3 INTEGER NOT NULL,
+    q4 INTEGER NOT NULL,
+    q5 INTEGER NOT NULL,
+    q6 INTEGER NOT NULL,
+    q7 INTEGER NOT NULL,
+    q8 INTEGER NOT NULL,
+    q9 INTEGER NOT NULL,
+    q10 INTEGER NOT NULL,
+    total_score INTEGER NOT NULL,
+    email_sent BOOLEAN NOT NULL,
+    email_error VARCHAR(500),
+    submitted_at TIMESTAMP WITH TIME ZONE NOT NULL
+);
+

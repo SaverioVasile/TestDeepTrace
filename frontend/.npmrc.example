@@ -1,0 +1,9 @@
+# Copy this file to frontend/.npmrc and adapt values to your environment.
+# Use this when npm must trust a corporate/self-signed CA.
+
+strict-ssl=true
+cafile=/absolute/path/to/company-ca.pem
+
+# Optional: set your private registry if needed
+# registry=https://europe-npm.pkg.dev/your-project/npm-all/
+
