@@ -6,7 +6,6 @@ import com.deeptrace.faq.dto.SubmissionSummaryResponse;
 import com.deeptrace.faq.model.RespondentType;
 import com.deeptrace.faq.model.Submission;
 import com.deeptrace.faq.repository.SubmissionRepository;
-import jakarta.mail.MessagingException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -58,7 +57,7 @@ public class SubmissionService {
             if (!sent) {
                 message = "Questionario salvato. Invio email disabilitato localmente (app.mail.enabled=false).";
             }
-        } catch (MessagingException ex) {
+        } catch (Exception ex) {
             saved.setEmailSent(false);
             saved.setEmailError(ex.getMessage());
             message = "Questionario salvato, ma invio email fallito: " + ex.getMessage();

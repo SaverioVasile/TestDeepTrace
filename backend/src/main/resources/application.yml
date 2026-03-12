@@ -27,7 +27,12 @@ server:
 app:
   mail:
     enabled: ${APP_MAIL_ENABLED:false}
+    provider: ${APP_MAIL_PROVIDER:smtp}
     from: ${APP_MAIL_FROM:no-reply@example.com}
+    ses:
+      region: ${APP_MAIL_SES_REGION:eu-west-1}
+      access-key: ${APP_MAIL_SES_ACCESS_KEY:}
+      secret-key: ${APP_MAIL_SES_SECRET_KEY:}
   cors:
     allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:5173}
 

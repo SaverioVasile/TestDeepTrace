@@ -5,7 +5,7 @@ Applicazione dimostrativa end-to-end per la prova DeepTrace:
 - salvataggio su PostgreSQL
 - calcolo punteggio totale
 - generazione report PDF
-- invio report via email (AWS SES SMTP)
+- invio report via email con provider configurabile (SMTP o AWS SES API)
 - visualizzazione ultime sottomissioni (bonus)
 
 ## Struttura progetto
@@ -49,13 +49,31 @@ App disponibili su:
 }
 ```
 
-## Configurazione email (SES SMTP)
+## Configurazione email (provider selezionabile)
 
 Per abilitare invio email reale:
-1. Verifica indirizzo/domain su SES.
-2. Inserisci credenziali SMTP SES in `.env`.
-3. Imposta `APP_MAIL_ENABLED=true`.
-4. Riavvia i container.
+1. Verifica indirizzo/domain su SES (necessario in entrambi i casi).
+2. Imposta `APP_MAIL_ENABLED=true`.
+3. Scegli `APP_MAIL_PROVIDER=smtp` oppure `APP_MAIL_PROVIDER=ses`.
+4. Configura le variabili del provider scelto in `.env`.
+5. Riavvia i container.
+
+### Opzione A: SMTP
+
+Usa le variabili Spring Mail:
+- `SPRING_MAIL_HOST`
+- `SPRING_MAIL_PORT`
+- `SPRING_MAIL_USERNAME`
+- `SPRING_MAIL_PASSWORD`
+
+### Opzione B: AWS SES API
+
+Usa le variabili SES:
+- `APP_MAIL_SES_REGION`
+- `APP_MAIL_SES_ACCESS_KEY`
+- `APP_MAIL_SES_SECRET_KEY`
+
+Se access key/secret key non sono valorizzate, l'app prova la AWS Default Credentials Chain.
 
 Se `APP_MAIL_ENABLED=false`, il flusso resta dimostrabile: dati e PDF vengono generati, ma non inviati.
 
@@ -88,10 +106,10 @@ Puoi eseguire Maven dalla root del progetto (`Test/`) per lavorare a moduli:
 ```bash
 cd /Users/saverio.vasile/IdeaProjects/Test
 mvn -pl backend -am test
-mvn -pl frontend -am prepare-package
+mvn -Pfrontend-build -pl frontend -am prepare-package
 ```
 
-> Nota: il modulo `frontend` usa `exec-maven-plugin` per lanciare `npm install` + `npm run build`.
+> Nota: il modulo `frontend` esegue `npm install` + `npm run build` solo con profilo `-Pfrontend-build`.
 
 ### Se npm fallisce con certificati (SELF_SIGNED_CERT_IN_CHAIN)
 
@@ -109,6 +127,9 @@ cp frontend/.npmrc.example frontend/.npmrc
 ```bash
 cd /Users/saverio.vasile/IdeaProjects/Test
 mvn -pl frontend -am prepare-package
+
+# con frontend profile attivo
+mvn -Pfrontend-build -pl frontend -am prepare-package
 ```
 
 Opzione temporanea (solo troubleshooting, non consigliata):
@@ -117,3 +138,16 @@ Opzione temporanea (solo troubleshooting, non consigliata):
 cd /Users/saverio.vasile/IdeaProjects/Test/frontend
 npm config set strict-ssl false
 ```
+
+### Se Maven fallisce con PKIX / certificate_unknown
+
+Se sei dietro rete aziendale con TLS inspection, prepara truststore locale progetto:
+
+```bash
+cd /Users/saverio.vasile/IdeaProjects/Test
+./scripts/setup-maven-truststore.sh
+mvn -s /Users/saverio.vasile/IdeaProjects/Test/.mvn-settings-personal.xml test
+```
+
+Il progetto include `/.mvn/jvm.config`, quindi Maven usera automaticamente `/.certs/maven-truststore.p12`.
+
