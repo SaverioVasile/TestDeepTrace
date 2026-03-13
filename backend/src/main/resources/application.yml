@@ -1,8 +1,4 @@
 spring:
-  datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/faqdb}
-    username: ${SPRING_DATASOURCE_USERNAME:faq}
-    password: ${SPRING_DATASOURCE_PASSWORD:faq}
   jpa:
     hibernate:
       ddl-auto: validate
@@ -25,6 +21,16 @@ server:
   port: ${SERVER_PORT:8080}
 
 app:
+  db:
+    provider: ${APP_DB_PROVIDER:local}
+    local:
+      url: ${APP_DB_LOCAL_URL:${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/faqdb}}
+      username: ${APP_DB_LOCAL_USERNAME:${SPRING_DATASOURCE_USERNAME:faq}}
+      password: ${APP_DB_LOCAL_PASSWORD:${SPRING_DATASOURCE_PASSWORD:faq}}
+    rds:
+      url: ${APP_DB_RDS_URL:}
+      username: ${APP_DB_RDS_USERNAME:}
+      password: ${APP_DB_RDS_PASSWORD:}
   mail:
     enabled: ${APP_MAIL_ENABLED:false}
     provider: ${APP_MAIL_PROVIDER:smtp}

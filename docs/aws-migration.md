@@ -14,9 +14,10 @@
 5. Enable HTTPS and lock CORS to production domain.
 
 ## Minimal environment variables in AWS
-- `SPRING_DATASOURCE_URL`
-- `SPRING_DATASOURCE_USERNAME`
-- `SPRING_DATASOURCE_PASSWORD`
+- `APP_DB_PROVIDER=rds`
+- `APP_DB_RDS_URL`
+- `APP_DB_RDS_USERNAME`
+- `APP_DB_RDS_PASSWORD`
 - `APP_MAIL_ENABLED=true`
 - `APP_MAIL_FROM`
 - `SPRING_MAIL_HOST`

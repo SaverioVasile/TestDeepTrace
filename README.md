@@ -49,6 +49,32 @@ App disponibili su:
 }
 ```
 
+## Configurazione database (provider selezionabile)
+
+Puoi scegliere il database con `APP_DB_PROVIDER`:
+- `local` usa PostgreSQL locale/containerizzato
+- `rds` usa PostgreSQL su AWS RDS
+
+### Opzione A: locale (default)
+
+```dotenv
+APP_DB_PROVIDER=local
+APP_DB_LOCAL_URL=jdbc:postgresql://postgres:5432/faqdb
+APP_DB_LOCAL_USERNAME=faq
+APP_DB_LOCAL_PASSWORD=faq
+```
+
+### Opzione B: AWS RDS
+
+```dotenv
+APP_DB_PROVIDER=rds
+APP_DB_RDS_URL=jdbc:postgresql://<rds-endpoint>:5432/<database>
+APP_DB_RDS_USERNAME=<username>
+APP_DB_RDS_PASSWORD=<password>
+```
+
+Con `APP_DB_PROVIDER=rds`, il backend usa esclusivamente i parametri `APP_DB_RDS_*`.
+
 ## Configurazione email (provider selezionabile)
 
 Per abilitare invio email reale:
