@@ -18,7 +18,7 @@ services:
 
   backend:
     build:
-      context: ../backend
+      context: ./backend
     container_name: faq-backend
     depends_on:
       postgres:
@@ -47,7 +47,7 @@ services:
 
   frontend:
     build:
-      context: ../frontend
+      context: ./frontend
     container_name: faq-frontend
     depends_on:
       - backend
@@ -58,4 +58,5 @@ services:
 
 volumes:
   faq_pg_data:
+
 

@@ -12,7 +12,7 @@ Applicazione dimostrativa end-to-end per la prova DeepTrace:
 
 - `backend/` Spring Boot 3 (Java 17)
 - `frontend/` Vue 3 + Vite + Tailwind
-- `infra/docker-compose.yml` deploy locale con PostgreSQL
+- `docker-compose.yml` deploy locale con PostgreSQL
 - `docs/aws-migration.md` note per passaggio su AWS
 
 ## Prerequisiti
@@ -26,7 +26,7 @@ Applicazione dimostrativa end-to-end per la prova DeepTrace:
 cd /Users/saverio.vasile/IdeaProjects/Test
 cp .env.example .env
 
-docker compose -f infra/docker-compose.yml up --build
+docker compose -f docker-compose.yml up --build
 ```
 
 App disponibili su:
@@ -136,6 +136,7 @@ mvn -Pfrontend-build -pl frontend -am prepare-package
 ```
 
 > Nota: il modulo `frontend` esegue `npm install` + `npm run build` solo con profilo `-Pfrontend-build`.
+> Nota: il progetto include `.mvn/maven.config`, quindi Maven usa automaticamente `/.mvn-settings-personal.xml` anche da IntelliJ.
 
 ### Se npm fallisce con certificati (SELF_SIGNED_CERT_IN_CHAIN)
 
